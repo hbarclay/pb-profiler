@@ -43,10 +43,6 @@ while getopts 'smbno:vf:d:i:a' flag; do
 	esac
 done
 
-if [[ $frequency == '' ]] ; then
-	printf "Must provide sample frequency\n"
-	exit 1
-fi
 
 if [[ $duration == '' ]] ; then
 	printf "Defaulting to 10s duration\n"
@@ -61,11 +57,26 @@ if [[ "$microarch_stats" == 'true' || "$all" == 'true' ]] ; then
 	# FIXME detailed, all cores, etc.
 	printf "Launching perf for microarch data\n"
 	touch microarch.data
-	(perf stat -daAv -D 1 -F $frequency -o "microarch.data" -x "," sleep $duration > perf_microarch.log 2>&1;) &
+	(perf stat -e cycles,instructions,branches,branch-misses,L1-dcache-loads,L1-dcache-misses,LLC-loads,LLC-misses -aAv -D 1 -o "microarch.data" -x "," sleep $duration > perf_microarch.log 2>&1;) &
 
-	# TODO add perf record
+	# TODO 
 fi
 
+
+if [[ "$function_profile" == 'true'  || "$all" == 'true' ]] ; then
+        
+    if [[ $frequency == '' ]] ; then
+        printf "Must provide sample frequency\n"
+        exit 1
+    fi
+
+    printf "Launching perf for call stack data"
+    perf record -F $frequency -ag -- sleep $duration
+    perf script | $base_path/flamegraph/stackcollapse-perf.pl > out.perf-folded
+    cat out.perf-folded | $base_path/flamegraph/flamegraph.pl > perf-kernel.svg
+fi
+
+# process 
 
 #if [[ "$sys_stats" == 'true' || "$all" == 'true' ]] ; then
 #		# TODO 
@@ -76,15 +87,4 @@ fi
 #if [[ "$bottleneck" == 'true' || "$all" == 'true' ]] ; then
 #		# TODO 
 #fi
-
-if [[ "$function_profile" == 'true'  || "$all" == 'true' ]] ; then
-		printf "Launching perf for call stack data"
-		perf record -F $frequency -ag -- sleep $duration
-		perf script | $base_path/flamegraph/stackcollapse-perf.pl > out.perf-folded
-		cat out.perf-folded | $base_path/flamegraph/flamegraph.pl > perf-kernel.svg
-fi
-
-# process 
-
-
 
