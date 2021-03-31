@@ -1,6 +1,6 @@
 Set of very simple scripts for collecting and visualizing system profiling information
 
-# perf-stats.sh
+## perf-stats.sh
 ``` 
 ./perf-stats.sh n
 ```
@@ -8,7 +8,7 @@ Set of very simple scripts for collecting and visualizing system profiling infor
 Collects data for `n` seconds from performance counters and computes values like IPC, MPKI, etc.
 
 
-# toplev-stats.sh
+## toplev-stats.sh
 
 ```
 ./toplev-stats.sh n
@@ -17,7 +17,7 @@ Collects data for `n` seconds from performance counters and computes values like
 Collects toplev bottleneck data for `n` seconds and outputs useful plots, currently `bottleneck.png`
 
 
-# flamegraph.sh
+## flamegraph.sh
 ```
 ./flamegraph.sh n f
 ```
