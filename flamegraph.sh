@@ -13,6 +13,6 @@ fi
 
 
 base_path=$(pwd)
-perf record -F $f -ag -- sleep $n
+perf record -F $2 -ag -- sleep $1
 perf script | $base_path/flamegraph/stackcollapse-perf.pl > out.perf-folded
 cat out.perf-folded | $base_path/flamegraph/flamegraph.pl > flamegraph.svg
