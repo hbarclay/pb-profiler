@@ -18,7 +18,9 @@ duration=$1
     {L1-dcache-misses,instructions}, \
     {dTLB-load-misses,dTLB-store-misses,instructions}, \
     {iTLB-load-misses,instructions}, \
-    {L1-icache-load-misses,instructions}' \
+    {L1-icache-load-misses,instructions}, \
+    {instructions:u,instructions:k}, \
+    {stalled-cycles-frontend,cycles}' \
         -aAv -D 1 -o "microarch.data" -x "," -- sleep $duration)
 
 

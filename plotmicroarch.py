@@ -18,9 +18,13 @@ if (num_cores > 1):
 # this section is specific to the events measured
 print("CPI: " + str(df.iloc[0, 0] / float(df.iloc[1, 0])));
 print("Br MPKI: " + str(1000.0 * (df.iloc[2, 0] / float(df.iloc[3, 0]))));
-print("L1 MPKI: " + str(1000.0 * (df.iloc[4, 0] / float(df.iloc[5, 0]))));
+print("L1D MPKI: " + str(1000.0 * (df.iloc[4, 0] / float(df.iloc[5, 0]))));
 print("dTLB MPKI: " + str(1000.0 * ((df.iloc[6, 0] + df.iloc[7,0]) / float(df.iloc[8, 0]))));
 print("iTLB MPKI: " + str(1000.0 * (df.iloc[9, 0] / float(df.iloc[10, 0]))));
+print("L1I MPKI: " + str(1000.0 * (df.iloc[11, 0] / float(df.iloc[12, 0]))));
+print("%kernel instr: " + str(df.iloc[14, 0] / float(df.iloc[13, 0])));
+print("%cycles stalled frontend: " + str(df.iloc[15, 0] / float(df.iloc[16, 0])));
+
 
 
 
